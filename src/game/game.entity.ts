@@ -18,4 +18,7 @@ export class Game {
     default: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
   })
   board: string;
+
+  @Column({ nullable: true })
+  socketId: string;
 }
