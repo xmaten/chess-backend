@@ -40,30 +40,49 @@ export class GameGateway
   @SubscribeMessage(ClientEvents.LobbyCreate)
   onLobbyCreate(
     client: AuthenticatedSocket,
+    data: any,
   ): WsResponse<ServerPayloads[ServerEvents.GameMessage]> {
     const lobby = this.lobbyManager.createLobby();
+    client.data.color = 'white';
+    client.data.playerId = data.playerId;
+    client.data.username = data.username;
+
     lobby.addClient(client);
 
     return {
       event: ServerEvents.GameMessage,
       data: {
         message: 'Lobby created',
-      },
+        color: client.data.color,
+      } as any,
     };
   }
 
   @SubscribeMessage(ClientEvents.LobbyJoin)
   onLobbyJoin(
     client: AuthenticatedSocket,
-    lobbyId: string,
+    data: any,
   ): WsResponse<ServerPayloads[ServerEvents.GameMessage]> {
-    this.lobbyManager.joinLobby(lobbyId, client);
+    if (!client.data.color) {
+      client.data.color = 'black';
+    }
+
+    if (!client.data.playerId) {
+      client.data.playerId = data.playerId;
+    }
+
+    if (!client.data.username) {
+      client.data.username = data.username;
+    }
+
+    this.lobbyManager.joinLobby(data.lobbyId, client);
 
     return {
       event: ServerEvents.GameMessage,
       data: {
         message: 'Lobby joined',
-      },
+        color: client.data.color,
+      } as any,
     };
   }
 

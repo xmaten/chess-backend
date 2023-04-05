@@ -7,6 +7,7 @@ export class Instance {
   public hasStarted = false;
   public hasFinished = false;
   public board = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+  public players = [];
 
   constructor(private readonly lobby: Lobby) {
     this.initializeBoard();
