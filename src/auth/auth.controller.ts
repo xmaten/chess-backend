@@ -26,7 +26,9 @@ export class AuthController {
   @Get('profile')
   getProfile(@Request() req: Request) {
     // TODO: fix any
-    return (req as any).user;
+    const user = (req as any).user;
+
+    return user;
   }
 
   @Public()
