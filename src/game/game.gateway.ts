@@ -71,10 +71,6 @@ export class GameGateway
       client.data.playerId = data.playerId;
     }
 
-    if (!client.data.username) {
-      client.data.username = data.username;
-    }
-
     this.lobbyManager.joinLobby(data.lobbyId, client);
 
     return {
